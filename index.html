@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akkor és Most</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: white;
+  text-align: center;
+}
+
+h1 {
+  margin: 20px 0;
+}
+
+.container {
+  position: relative;
+  max-width: 1000px;
+  margin: auto;
+}
+
+img {
+  width: 100%;
+  display: block;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: 50%;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 100%;
+  background: white;
+  cursor: ew-resize;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Sajóvárkony – Akkor és Most</h1>
+
+<div class="container">
+  <img src="uj.jpg" alt="Új kép">
+  <div class="overlay" id="overlay">
+    <img src="regi.jpg" alt="Régi kép">
+  </div>
+  <div class="slider" id="slider"></div>
+</div>
+
+<script>
+const slider = document.getElementById("slider");
+const overlay = document.getElementById("overlay");
+let isDown = false;
+
+slider.addEventListener("mousedown", () => isDown = true);
+window.addEventListener("mouseup", () => isDown = false);
+
+window.addEventListener("mousemove", (e) => {
+  if (!isDown) return;
+  const rect = overlay.parentElement.getBoundingClientRect();
+  let offset = e.clientX - rect.left;
+  if (offset < 0) offset = 0;
+  if (offset > rect.width) offset = rect.width;
+  overlay.style.width = offset + "px";
+  slider.style.left = offset + "px";
+});
+</script>
+
+</body>
+</html>
